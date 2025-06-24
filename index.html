@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2048 Bot Player</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="heading level-y flex">
+            <h1 class="flex-1 title">2048 Bot Player</h1>
+            <div class="shrink scores-container">
+                <div class="score-container">
+                    <span id="score">0</span>
+                    <div class="score-addition" id="score-addition"></div>
+                </div>
+                <div class="best-container" id="best">0</div>
+            </div>
+        </div>
+        
+        <div class="game-intro">
+            <div class="controls">
+                <button class="restart-button" onclick="game.restart()">New Game</button>
+                <button class="bot-toggle" id="botToggle" onclick="bot.toggle()">Start Bot</button>
+                <button class="manual-button" onclick="bot.stop()">Manual Mode</button>
+            </div>
+            <h2 class="subtitle">AI Bot Playing <strong>2048 Game</strong></h2>
+            <div class="above-game">
+                <p>Watch the AI try to reach the <strong>2048 tile!</strong></p>
+                <div class="bot-status">
+                    <p>Bot Status: <span id="botStatus">Stopped</span></p>
+                    <p>Strategy: <span id="strategy">Enhanced AI</span></p>
+                    <p>Speed: <input type="range" id="speedSlider" min="50" max="1000" value="200"> <span id="speedValue">200ms</span></p>
+                    <div class="performance-stats" style="font-size: 12px; color: #666; margin-top: 10px;">
+                        <p>Cache Hit Rate: <span id="cacheHitRate">0%</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="game-container">
+            <div class="game-message" id="gameMessage" style="display: none;">
+                <p id="messageText"></p>
+                <div class="lower">
+                    <a class="keep-playing-button" onclick="game.keepPlaying()">Keep playing</a>
+                    <a class="retry-button" onclick="game.restart()">Try again</a>
+                </div>
+            </div>
+
+            <div class="grid-container">
+                <div class="grid-row">
+                    <div class="grid-cell"></div>
+                    <div class="grid-cell"></div>
+                    <div class="grid-cell"></div>
+                    <div class="grid-cell"></div>
+                </div>
+                <div class="grid-row">
+                    <div class="grid-cell"></div>
+                    <div class="grid-cell"></div>
+                    <div class="grid-cell"></div>
+                    <div class="grid-cell"></div>
+                </div>
+                <div class="grid-row">
+                    <div class="grid-cell"></div>
+                    <div class="grid-cell"></div>
+                    <div class="grid-cell"></div>
+                    <div class="grid-cell"></div>
+                </div>
+                <div class="grid-row">
+                    <div class="grid-cell"></div>
+                    <div class="grid-cell"></div>
+                    <div class="grid-cell"></div>
+                    <div class="grid-cell"></div>
+                </div>
+            </div>
+
+            <div class="tile-container" id="tileContainer">
+                <!-- Tiles will be dynamically generated -->
+            </div>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+    <script src="bot.js"></script>
+    <script>
+        // Initialize game
+        const game = new Game2048();
+        const bot = new Bot2048(game);
+        
+        // Speed control
+        const speedSlider = document.getElementById('speedSlider');
+        const speedValue = document.getElementById('speedValue');
+        
+        speedSlider.addEventListener('input', (e) => {
+            const speed = e.target.value;
+            speedValue.textContent = speed + 'ms';
+            bot.setSpeed(parseInt(speed));
+        });
+        
+        // Start the game
+        game.start();
+    </script>
+</body>
+</html>

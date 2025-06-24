@@ -52,7 +52,6 @@ class Game2048 {
     move(direction, simulate = false) {
         if (this.gameState !== 'playing') return false;
         
-        const previousBoard = this.board.map(row => [...row]);
         const previousScore = this.score;
         let moved = false;
         
